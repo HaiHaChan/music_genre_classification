@@ -23,7 +23,7 @@ $ python audio2img_private_testset.py
 
 # Cross validation
 
-Để generate ra 5 fole chạy file trong thư mục src
+Để generate ra 5 fole chạy file trong thư mục src, hoặc dùng data đã được mình generate ra trong thư mục data
 
 $ python create_trainset.py
 
