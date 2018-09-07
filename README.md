@@ -13,9 +13,9 @@ Với tập train, mỗi file audio 2ph tách thành các đoạn 20s: với cá
 
 Tham khảo [https://librosa.github.io/librosa/generated/librosa.feature.melspectrogram.html]
 
-Với tập public test, tương tự chia file 2ph thành các đoạn 20s, độ dịch 5s, tính toán melspectrogram và lưu thành ảnh 512x512x3. Với tập private test, do có một số file có độ dài dưới 2ph nên mình sẽ duplicate cho đến khi chiều dài >= 2ph, sau đó cắt đúng độ dài 2ph, tương tự chia thành 11 đoạn 20s, dich 10s, lưu thảnh ảnh 512x512x3. Sử dụng test time augmentation là horizontal flip, tổng cộng 1 file 2ph sẽ được tách thành 22 file nhỏ, predict cho 22 file này. Kết quả predict file 2ph sẽ là trung bình của kết quả predict 22 file nhỏ 20s.
+Với tập public test, tương tự chia file 2ph thành các đoạn 20s, độ dịch 5s, tính toán melspectrogram và lưu thành ảnh 512x512x3. Với tập private test, do có một số file có độ dài dưới 2ph nên mình sẽ duplicate cho đến khi chiều dài >= 2ph, sau đó cắt đúng độ dài 2ph, tương tự chia thành 11 đoạn 20s, dịch 10s, lưu thảnh ảnh 512x512x3. Sử dụng test time augmentation là horizontal flip, tổng cộng 1 file 2ph sẽ được tách thành 22 file nhỏ, predict cho 22 file này. Kết quả predict file 2ph sẽ là trung bình của kết quả predict 22 file nhỏ 20s.
 
-Để tính melspectrogram và lưu thành fiel ành đơn giản chạy 2 file trong thư mục src
+Để tính melspectrogram và lưu thành file ảnh đơn giản chạy 2 file trong thư mục src
 
 $ python audio2img.py 
 
