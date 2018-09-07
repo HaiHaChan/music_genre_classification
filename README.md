@@ -29,7 +29,7 @@ $ python create_trainset.py
 
 Chia tập trainset thành 5 fold (chú ý là chia với tập audio 2ph). Ứng với mỗi file audio sẽ sủ dụng 21 file ảnh (class 1,9,10) hoặc 11 file ảnh (class còn lại). Mình sử dụng 6 pretrain model trên tập image net: densenet169, densenet201, inception_resnet_v2, inception_v3, resnet50, xception. Warmup 1 epoch đầu, sử dụng augmentation horizontal flip.
 
-Code train và predict cho mõi model nằm trong thư mục [model]/src, trong quá trình train weight sẽ nằm trong thư mục weights, training log sẽ nằm trong thư mục logs, data chứa output predict của mỗi model
+Code train và predict cho mỗi model nằm trong thư mục [model]/src, trong quá trình train weight sẽ nằm trong thư mục weights, training log sẽ nằm trong thư mục logs, data chứa output predict của mỗi model
 
 # Bước 1: train lần 1
 
@@ -41,7 +41,7 @@ Predict cho cả 3 tập train, validation, public test trên các ảnh nhỏ, 
 
 # Bước 3: pseudo labeling
 
-Lúc này LB là 0.802 có nghĩa predict trên bộ public test có độ chính xác 80%. Chọn trên bộ public test các file có xác suất > 85%, đưa vào tập train train tiếp. Vi không có thời gian nên mình sử dụng 3 fold còn lại 2,3,4 để train với tập train + pseudo test set này. Tiến hành train giống bước 1, nhưng lần này train với cả 6 model, val_acc cho tập ảnh sau khi phân rã của mỗi model lúc này boost từ 0.6996 lên được 0.72.
+Lúc này LB là 0.802 có nghĩa predict trên bộ public test có độ chính xác 80%. Chọn trên bộ public test các file có probability > 0.85, đưa vào tập train để train tiếp. Vi không có thời gian nên mình sử dụng 3 fold còn lại 2,3,4 để train với tập train + pseudo test set này. Tiến hành train giống bước 1, nhưng lần này train với cả 6 model, val_acc cho tập ảnh sau khi phân rã của mỗi model lúc này boost từ 0.6996 lên được 0.72.
 
 # Bước 4: stacking lần 2
 
