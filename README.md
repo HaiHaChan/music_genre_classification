@@ -53,7 +53,7 @@ Predict cho cả 3 tập train + pseudo test, validation, public test trên các
 
 # Bước 5: đánh bừa trọng số :v
 
-Đánh trọng số cho thằng cnn_staking1 là 0.45, cnn_stacking2 là 0.45 và bé lgb_stacking1 là 0.1
+Đánh trọng số cho thằng cnn_staking1 là 0.45, cnn_stacking2 là 0.45 và bé lgb_stacking1 là 0.1. Có thể đánh trọng số khác tùy kinh nghiệm.
 
 Kết quả cuối = 0.45 x cnn_stacking1 + 0.45 x cnn_stacking2 + 0.1 x lgb_stacking1.
 
