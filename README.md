@@ -13,7 +13,7 @@ Với tập train, mỗi file audio 2ph tách thành các đoạn 20s: với cá
 
 Tham khảo [https://librosa.github.io/librosa/generated/librosa.feature.melspectrogram.html]
 
-Với tập public test, tương tự chia file 2ph thành các đoạn 20s, độ dịch 5s, tính toán melspectrogram và lưu thành ảnh 512x512x3. Với tập private test, do có một số file có độ dài dưới 2ph nên mình sẽ concatenate cho đến khi chiều dài >= 2ph, sau đó cắt đúng độ dài 2ph, tương tự chia thành 11 đoạn 20s, dich 10s, lưu thảnh ảnh 512x512x3. Sử dụngtest time augmentation là horizontal flip, tổng cộng 1 file 2ph sẽ được tách thành 22 file nhỏ, predict cho 22 file này. Kết quả predict file 2ph sẽ là trung bình của kết quả predict 22 file nhỏ 20s.
+Với tập public test, tương tự chia file 2ph thành các đoạn 20s, độ dịch 5s, tính toán melspectrogram và lưu thành ảnh 512x512x3. Với tập private test, do có một số file có độ dài dưới 2ph nên mình sẽ concatenate cho đến khi chiều dài >= 2ph, sau đó cắt đúng độ dài 2ph, tương tự chia thành 11 đoạn 20s, dich 10s, lưu thảnh ảnh 512x512x3. Sử dụng test time augmentation là horizontal flip, tổng cộng 1 file 2ph sẽ được tách thành 22 file nhỏ, predict cho 22 file này. Kết quả predict file 2ph sẽ là trung bình của kết quả predict 22 file nhỏ 20s.
 
 Để tính melspectrogram và lưu thành fiel ành đơn giản chạy 2 file trong thư mục src
 
@@ -27,7 +27,7 @@ $ python audio2img_private_testset.py
 
 $ python create_trainset.py
 
-Chia tập trainset thành 5 fold (chú ý là chia với tập audio 2ph). Ững với mỗi file audio sẽ sủ dụng 21 file ảnh (class 1,9,10) hoặc 11 file ảnh (class còn lại). Mình sử dụng 6 pretrain model trên tập image net: densenet169, densenet201, inception_resnet_v2, inception_v3, resnet50, xception. Warmup 1 epoch đầu, sử dụng augmentation horizontal flip.
+Chia tập trainset thành 5 fold (chú ý là chia với tập audio 2ph). Ứng với mỗi file audio sẽ sủ dụng 21 file ảnh (class 1,9,10) hoặc 11 file ảnh (class còn lại). Mình sử dụng 6 pretrain model trên tập image net: densenet169, densenet201, inception_resnet_v2, inception_v3, resnet50, xception. Warmup 1 epoch đầu, sử dụng augmentation horizontal flip.
 
 Code train và predict cho mõi model nằm trong thư mục [model]/src, trong quá trình train weight sẽ nằm trong thư mục weights, training log sẽ nằm trong thư mục logs, data chứa output predict của mỗi model
 
@@ -37,7 +37,7 @@ Train trên 2 fold 0,1, sử dụng 3 base model là densenet201, inception_v3, 
 
 # Bước 2: stacking lần 1
 
-Predict cho cả 3 tập train, validation, public test trên các ảnh nhỏ, gom lại tương ứng với file lớn, thu được một 3 matrix có shape: train_sizex10, valid_sizex10, test_sizex10. Xếp chồng kết quả của 3 model theo chiều ngang được 3 matrix train_sizex3x10, valid_sizex3x10, test_sizex3x10. Tạo 1 model cnn đơn giản với input shape là 3x10, output shape là 1x10, các lớp cnn có kernel size là 2x1 [kiểu thay vì cộng trung bình thì đê cho thằng cnn tự tính tỉ lệ tốt nhất giữa 3 model]. Val_acc sau stack cho mỗi fold 0 và 1 khoảng 0.808. Cộng trung bình cho 2 fold 0 và 1, mình submit thì LB trên public test là 0.802
+Predict cho cả 3 tập train, validation, public test trên các ảnh nhỏ, gom lại tương ứng với file lớn, thu được một 3 matrix có shape: train_sizex10, valid_sizex10, test_sizex10. Xếp chồng kết quả của 3 model theo chiều ngang được 3 matrix train_sizex3x10, valid_sizex3x10, test_sizex3x10. Tạo 1 model cnn đơn giản với input shape là 3x10, output shape là 1x10, các lớp cnn có kernel size là 2x1 [kiểu thay vì cộng trung bình thì để cho thằng cnn tự tính tỉ lệ tốt nhất giữa 3 model]. Val_acc sau stack cho mỗi fold 0 và 1 khoảng 0.808. Cộng trung bình cho 2 fold 0 và 1, mình submit thì LB trên public test là 0.802
 
 # Bước 3: pseudo labeling
 
